@@ -8,7 +8,9 @@ const Header = () => {
   return (
     <div className="header">
       <div className="logo-container">
-        <img className="logo" src={LOGO_URL} />
+        <Link to="/">
+          <img className="logo" src={LOGO_URL} />
+        </Link>
       </div>
       <div className="nav-items">
         <ul>
@@ -19,7 +21,7 @@ const Header = () => {
             <Link to="/about">About Us</Link>
           </li>
           <li>
-            <Link to="/contact">Contact</Link>  
+            <Link to="/contact">Contact</Link>
           </li>
           <li> Cart </li>
           <button
