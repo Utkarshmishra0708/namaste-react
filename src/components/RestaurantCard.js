@@ -22,7 +22,9 @@ const RestaurantCard = (props) => {
         />
         <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-b from-transparent to-black"></div>
         <div className="absolute bottom-0 left-0 text-white p-2">
-          <h4 className="p-2 font-extrabold font-sans text-2xl">{costForTwo}</h4>
+          <h4 className="p-2 font-extrabold font-sans text-2xl">
+            {costForTwo}
+          </h4>
         </div>
       </div>
       <h3 className="font-bold py-4 text-lg">{name}</h3>
@@ -31,6 +33,19 @@ const RestaurantCard = (props) => {
       <h4>{sla.slaString}</h4>
     </div>
   );
+};
+
+export const withVegLabel = (RestaurantCard) => {
+  return (props) => {
+    return (
+      <div>
+        <label className="border border-black bg-gray-100 text-black-500 m-2 p-2 rounded-lg">
+          🟢 VEG
+        </label>
+        <RestaurantCard {...props} />
+      </div>
+    );
+  };
 };
 
 export default RestaurantCard;
