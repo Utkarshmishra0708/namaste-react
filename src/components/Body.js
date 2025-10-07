@@ -10,6 +10,8 @@ const Body = () => {
   const [filteredRestaurants, setFilteredRestaurants] = useState([]);
   const [searchText, setSearchText] = useState("");
   const RestaurantCardVeg = withVegLabel(RestaurantCard);
+  const onlineStatus = useOnlineStatus();
+  const { loggedInUser, setUserName } = useContext(UserContext);
 
   useEffect(() => {
     fetchData();
@@ -19,9 +21,7 @@ const Body = () => {
     const data = await fetch(
       "https://www.swiggy.com/dapi/restaurants/list/v5?lat=28.7040592&lng=77.10249019999999&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
     );
-
     const json = await data.json();
-
     setListOfRestaurants(
       json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants
     );
@@ -30,25 +30,21 @@ const Body = () => {
     );
   };
 
-  const onlineStatus = useOnlineStatus();
-
   if (onlineStatus === false)
     return (
-      <h1>
-        Looks like you're offline!! Please check your internet connection.
+      <h1 className="text-center text-white">
+        Looks like you're offline! Please check your internet connection.
       </h1>
     );
 
-  const { loggedInUser, setUserName } = useContext(UserContext);
+  if (listOfRestaurants.length === 0) return <Shimmer />;
 
-  return listOfRestaurants.length === 0 ? (
-    <Shimmer />
-  ) : (
-    <div className="body">
-      <div className="filter flex justify-between">
-        <div className="search m-4 p-4 flex items-center">
+  return (
+    <div className="body bg-gray-900 min-h-screen text-white p-4">
+      <div className="filter flex flex-wrap justify-between">
+        <div className="search flex items-center mb-4">
           <button
-            className="px-4 py-1 bg-gray-100 rounded-lg"
+            className="px-4 py-2 bg-orange-500 rounded-lg hover:bg-orange-600"
             onClick={() => {
               const filteredList = listOfRestaurants.filter(
                 (res) => res.info.avgRating > 4
@@ -59,31 +55,28 @@ const Body = () => {
             Top Rated Restaurants
           </button>
         </div>
-        <div className="search m-4 p-4 flex items-center">
-          <label>User Name: </label>
+        <div className="search flex items-center mb-4">
+          <label className="mr-2">User Name: </label>
           <input
-            className="border border-black p-2"
+            className="border border-gray-300 p-2 rounded-lg text-black"
             value={loggedInUser}
             onChange={(e) => setUserName(e.target.value)}
           />
         </div>
-        <div className="search m-4 p-4">
+        <div className="search flex items-center mb-4">
           <input
             type="text"
-            data-testid = "searchInput"
-            className="border border-solid border-black rounded-lg"
+            data-testid="searchInput"
+            className="border border-gray-300 p-2 rounded-lg text-black"
             value={searchText}
-            onChange={(e) => {
-              setSearchText(e.target.value);
-            }}
+            onChange={(e) => setSearchText(e.target.value)}
           />
           <button
-            className="px-4 py-1 bg-orange-100 m-4 rounded-lg"
+            className="ml-2 px-4 py-2 bg-orange-500 rounded-lg hover:bg-orange-600"
             onClick={() => {
               const filteredRestaurants = listOfRestaurants.filter((res) =>
                 res.info.name.toLowerCase().includes(searchText.toLowerCase())
               );
-
               setFilteredRestaurants(filteredRestaurants);
             }}
           >
@@ -92,7 +85,7 @@ const Body = () => {
         </div>
       </div>
 
-      <div className="flex flex-wrap">
+      <div className="flex flex-wrap justify-center">
         {filteredRestaurants?.map((restaurant) => (
           <Link
             key={restaurant.info.id}

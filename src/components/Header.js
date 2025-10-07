@@ -8,46 +8,40 @@ import { useSelector } from "react-redux";
 const Header = () => {
   const [btnName, setbtnName] = useState("Login");
   const onlineStatus = useOnlineStatus();
-
   const { loggedInUser } = useContext(UserContext);
-
   const cartItems = useSelector((store) => store.cart.items);
 
   return (
-    <div className="flex justify-between shadow-lg bg-green-50">
+    <div className="flex justify-between items-center p-4 bg-gray-800 text-white shadow-lg sticky top-0 z-50">
       <div className="logo-container">
         <Link to="/">
-          <img className="w-24 m-2" src={LOGO_URL} />
+          <h1 className="text-3xl font-bold text-orange-400">NAMASTE FOOD</h1>
         </Link>
       </div>
-      <div className="flex items-center">
-        <ul className="flex p-4 m-4">
-          <li className="px-4">Online Status: {onlineStatus ? "🟢" : "🔴"}</li>
-          <li className="px-4">
-            <Link to="/">Home</Link>
-          </li>
-          <li className="px-4">
-            <Link to="/about">About Us</Link>
-          </li>
-          <li className="px-4">
-            <Link to="/contact">Contact</Link>
-          </li>
-          <li className="px-4">
-            <Link to="/grocery">Grocery</Link>
-          </li>
-          <li className="px-4 font-bold text-xl">
-            <Link to="/cart">Cart ({cartItems.length} items) </Link>
-          </li>
-          <button
-            className="logibn px-4"
-            onClick={() => {
-              btnName === "Login" ? setbtnName("Logout") : setbtnName("Login");
-            }}
-          >
-            {btnName}
-          </button>
-          <li className="px-4 font-bold"> {loggedInUser} </li>
-        </ul>
+      <div className="flex items-center space-x-6">
+        <span>Online Status: {onlineStatus ? "🟢" : "🔴"}</span>
+        <Link to="/" className="hover:text-orange-400">
+          Home
+        </Link>
+        <Link to="/about" className="hover:text-orange-400">
+          About Us
+        </Link>
+        <Link to="/contact" className="hover:text-orange-400">
+          Contact
+        </Link>
+        <Link to="/grocery" className="hover:text-orange-400">
+          Grocery
+        </Link>
+        <Link to="/cart" className="font-bold hover:text-orange-400">
+          Cart ({cartItems.length} items)
+        </Link>
+        <button
+          className="px-3 py-1 bg-orange-500 rounded-lg hover:bg-orange-600"
+          onClick={() => setbtnName(btnName === "Login" ? "Logout" : "Login")}
+        >
+          {btnName}
+        </button>
+        <span className="font-semibold">{loggedInUser}</span>
       </div>
     </div>
   );

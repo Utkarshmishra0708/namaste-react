@@ -1,21 +1,19 @@
 const Contact = () => {
   return (
-    <div>
-      <h1 className="font-bold text-3xl p-4 m-4">
-        This is Namaste React Web Series
-      </h1>
-      <form>
+    <div className="min-h-screen bg-gray-900 text-white flex flex-col items-center p-6">
+      <h1 className="text-3xl font-bold mb-4 text-orange-400">Contact Us</h1>
+      <form className="flex flex-col w-full md:w-6/12 space-y-4">
         <input
           type="text"
-          className="border border-black p-2 m-2"
-          placeholder="name"
+          className="p-2 rounded-lg border border-gray-700 text-black"
+          placeholder="Name"
         />
         <input
           type="text"
-          className="border border-black p-2 m-2"
-          placeholder="message"
+          className="p-2 rounded-lg border border-gray-700 text-black"
+          placeholder="Message"
         />
-        <button className="border border-black p-2 m-2 bg-gray-100 rounded-lg">
+        <button className="p-2 bg-orange-500 rounded-lg hover:bg-orange-600 text-white">
           Submit
         </button>
       </form>

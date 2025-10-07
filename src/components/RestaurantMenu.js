@@ -6,18 +6,13 @@ import { useState } from "react";
 
 const RestaurantMenu = () => {
   const { resId } = useParams();
-
   const resInfo = useRestaurantMenu(resId);
-
   const [showIndex, setShowIndex] = useState(null);
 
-  if (resInfo === null) return <Shimmer />;
+  if (!resInfo) return <Shimmer />;
 
   const { name, cuisines, costForTwoMessage } =
     resInfo?.cards[2]?.card?.card?.info;
-
-  const { itemCards } =
-    resInfo?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[2]?.card?.card;
 
   const categories =
     resInfo?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards.filter(
@@ -27,20 +22,26 @@ const RestaurantMenu = () => {
     );
 
   return (
-    <div className="menu text-center">
-      <h1 className="font-bold my-6 text-2xl">{name}</h1>
-      <p className="font-bold text-lg">
-        {cuisines.join(", ")} - {costForTwoMessage}
-      </p>
-      {categories.map((category, index) => (
-        //controlled component
-        <RestaurantCategory
-          key={category?.card?.card?.title}
-          data={category?.card?.card}
-          showItems={index === showIndex ? true : false}
-          setShowIndex={() => setShowIndex(showIndex !== index ? index : null)}
-        />
-      ))}
+    <div className="min-h-screen bg-gray-900 text-white p-6">
+      <div className="text-center mb-6">
+        <h1 className="text-4xl font-bold text-orange-400">{name}</h1>
+        <p className="text-gray-300 text-lg mt-2">
+          {cuisines.join(", ")} - {costForTwoMessage}
+        </p>
+      </div>
+
+      <div className="flex flex-col space-y-4">
+        {categories.map((category, index) => (
+          <RestaurantCategory
+            key={category?.card?.card?.title}
+            data={category?.card?.card}
+            showItems={index === showIndex}
+            setShowIndex={() =>
+              setShowIndex(showIndex !== index ? index : null)
+            }
+          />
+        ))}
+      </div>
     </div>
   );
 };

@@ -3,46 +3,41 @@ import { CDN_URL } from "../utils/constants";
 import { addItem } from "../utils/cartSlice";
 
 const ItemList = ({ items }) => {
-
   const dispatch = useDispatch();
-
-  const handleAddItem = (item) => {
-    // Dispatch an action
-    dispatch(addItem(item));
-  };
+  const handleAddItem = (item) => dispatch(addItem(item));
 
   return (
-    <div>
+    <div className="space-y-4">
       {items.map((item) => (
-        <div data-testid="foodItems"
+        <div
+          data-testid="foodItems"
           key={item?.card?.info?.id}
-          className="p-2 m-2 border-gray-200 border-b-2 text-left flex justify-between"
+          className="flex justify-between p-4 bg-gray-800 rounded-lg shadow-md hover:scale-105 transition-transform duration-200"
         >
-          <div className="w-9/12">
-            <div className="py-2">
-              <span>{item?.card?.info?.name}</span>
-              <span>
-                - ₹
-                {(item?.card?.info?.defaultPrice ||
-                  item?.card?.info?.finalPrice ||
-                  item?.card?.info?.price) / 100}
-              </span>
-            </div>
-            <p className="text-xs">{item?.card?.info?.description}</p>
+          <div className="flex-1 pr-4">
+            <h3 className="font-bold text-lg">{item?.card?.info?.name}</h3>
+            <p className="text-gray-300 text-sm">
+              {item?.card?.info?.description}
+            </p>
+            <p className="font-semibold mt-1">
+              ₹
+              {(item?.card?.info?.defaultPrice ||
+                item?.card?.info?.finalPrice ||
+                item?.card?.info?.price) / 100}
+            </p>
           </div>
-          <div className="relative">
-            <div className="absolute inset-0 flex justify-center items-end">
-              <button
-                className="py-1 px-2 bg-black text-white shadow-lg rounded-lg text-sm"
-                onClick={() => handleAddItem(item)}
-              >
-                Add +
-              </button>
-            </div>
+          <div className="flex flex-col items-center">
             <img
-              className="w-20 h-20 rounded-lg"
+              className="w-20 h-20 rounded-lg mb-2 object-cover"
               src={CDN_URL + item?.card?.info?.imageId}
+              alt={item?.card?.info?.name}
             />
+            <button
+              className="px-3 py-1 bg-orange-500 rounded-lg text-white hover:bg-orange-600"
+              onClick={() => handleAddItem(item)}
+            >
+              Add +
+            </button>
           </div>
         </div>
       ))}

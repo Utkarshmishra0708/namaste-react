@@ -3,23 +3,20 @@ import { Component } from "react";
 import UserContext from "../utils/UserContext";
 
 class About extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  componentDidMount() {}
   render() {
     return (
-      <div>
-        <h1>About Us</h1>
-        <div>
+      <div className="min-h-screen bg-gray-900 text-white flex flex-col items-center p-6">
+        <h1 className="text-4xl font-bold mb-4 text-orange-400">About Us</h1>
+        <div className="mb-4">
           <UserContext.Consumer>
             {({ loggedInUser }) => (
-              <h1 className="text-xl font-bold">{loggedInUser}</h1>
+              <h2 className="text-xl font-semibold">{loggedInUser}</h2>
             )}
           </UserContext.Consumer>
         </div>
-        <h2>This is Namaste React Web Series</h2>
+        <h2 className="text-lg text-gray-200 mb-6">
+          This is Namaste React Web Series
+        </h2>
         <UserClass />
       </div>
     );
